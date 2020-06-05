@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>List Customer</title>
+</head>
+<body>
+<div><a href="/customer/create-form">Add customer</a></div>
+<div><a href="/province">Province</a></div>
+<div>
+    <form th:action="@{customer/find}" method="post" th:object="${customer}">
+        <tr>
+            <td>Province:</td>
+            <td>
+                <select th:field="*{province}">
+                    <option th:each="p : ${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <button type="submit">SEARCH</button>
+    </form>
+
+</div>
+<div>
+    <table>
+        <thead>
+        <td>FIRST NAME</td>
+        <td>LAST NAME</td>
+        <td>PROVINCE</td>
+        <td>EDIT</td>
+        <td>DELETE</td>
+        </thead>
+        <tbody th:each="customer : ${customers}">
+        <td th:text="${customer.firstName}"></td>
+        <td th:text="${customer.lastName}"></td>
+        <td th:text="${customer.province.getName()}"></td>
+        <td><a th:href="@{customer/edit/__${customer.id}__}">EDIT</a></td>
+        <td><a th:href="@{customer/delete/__${customer.id}__}">DELETE</a></td>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

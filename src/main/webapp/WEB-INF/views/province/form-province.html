@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form Province</title>
+</head>
+<body>
+<div>
+    <div><a href="/province">Back province</a></div>
+    <form action="#" th:action="@{create}" method="post" th:object="${province}">
+        <input type="hidden" th:field="*{id}">
+        <div>
+            <span>NAME</span>
+            <input type="text" th:field="*{name}">
+        </div>
+        <div>
+            <button type="submit">CREATE</button>
+        </div>
+    </form>
+    <div>
+        <p th:text="${message}"></p>
+    </div>
+</div>
+</body>
+</html>

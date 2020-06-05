@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>List Province</title>
+</head>
+<body>
+<div>
+
+        <div><a href="/province/create-form">Add Province</a></div>
+    <div><a href="/customer">Customer</a></div>
+    <table>
+        <thead>
+        <td>ID</td>
+        <td>NAME</td>
+        <td>EDIT</td>
+        <td>DELETE</td>
+        <td>DETAILS</td>
+        </thead>
+        <tbody th:each="province : ${provinces}">
+        <td th:text="${province.getId()}"></td>
+        <td th:text="${province.getName()}"></td>
+        <td><a th:href="@{province/{id}/edit(id=${province.getId()})}">EDIT</a></td>
+        <td><a th:href="@{province/{id}/delete(id=${province.getId()})}">DELETE</a></td>
+        <td><a th:href="@{province/{id}/details(id=${province.getId()})}">DETAILS</a></td>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

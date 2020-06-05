@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Customer</title>
+</head>
+<body>
+<div>
+    <a href="/customer">Back Customer</a>
+</div>
+
+<div>
+    <form method="post" th:object="${customer}">
+        <input type="hidden" th:field="*{id}">
+        <div>
+            <span>FIRST NAME</span>
+            <input type="text" th:field="*{firstName}">
+        </div>
+        <div>
+            <span>LAST NAME</span>
+            <input type="text" th:field="*{lastName}">
+        </div>
+        <div>
+            <span>PROVINCE</span>
+
+            <select name="province">
+                <option th:each="p : ${provinces}"
+                        th:value="${p.id}"
+                        th:text="${p.name}"
+                        th:selected="(${p.id} == *{province.id})">
+                </option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">EDIT</button>
+        </div>
+    </form>
+    <p th:text="${message}"></p>
+</div>
+</body>
+</html>
