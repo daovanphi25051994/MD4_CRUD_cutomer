@@ -19,7 +19,7 @@ public class CustomerController {
     private IProvinceService provinceService;
 
     @GetMapping()
-    public ModelAndView getCustomerPage() {
+    public ModelAndView getCustomerPage() throws Exception {
         ModelAndView modelAndView = new ModelAndView("customer/list-customer");
         modelAndView.addObject("customers", customerService.getAll());
         modelAndView.addObject("provinces", provinces());
@@ -28,7 +28,7 @@ public class CustomerController {
     }
 
     @PostMapping("/find")
-    public ModelAndView getCustomerByProvince(@RequestParam Province province) {
+    public ModelAndView getCustomerByProvince(@RequestParam Province province) throws Exception {
         ModelAndView modelAndView = new ModelAndView("customer/list-customer");
         modelAndView.addObject("customers", customerService.getAllByProvince(province));
         modelAndView.addObject("provinces", provinces());
@@ -37,12 +37,12 @@ public class CustomerController {
     }
 
     @ModelAttribute("provinces")
-    public Iterable<Province> provinces() {
+    public Iterable<Province> provinces() throws Exception {
         return provinceService.getAll();
     }
 
     @GetMapping("/create-form")
-    public ModelAndView moveToCustomerFormPage() {
+    public ModelAndView moveToCustomerFormPage() throws Exception {
         ModelAndView modelAndView = new ModelAndView("customer/form-customer");
         modelAndView.addObject("customer", new Customer());
         modelAndView.addObject("provinces", provinces());
@@ -74,7 +74,7 @@ public class CustomerController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteCustomer(@PathVariable Long id) {
+    public ModelAndView deleteCustomer(@PathVariable Long id) throws Exception {
         ModelAndView modelAndView = new ModelAndView("customer/list-customer");
         customerService.delete(id);
         modelAndView.addObject("customers", customerService.getAll());

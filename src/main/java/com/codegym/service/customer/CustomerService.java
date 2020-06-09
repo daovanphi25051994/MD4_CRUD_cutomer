@@ -11,9 +11,11 @@ public class CustomerService implements ICustomerService {
     private ICustomerRepository customerRepository;
 
     @Override
-    public Iterable<Customer> getAll() {
+    public Iterable<Customer> getAll() throws Exception {
+       if (true)throw new Exception("khong thay list");
         return customerRepository.findAll();
     }
+
 
     @Override
     public Customer save(Customer model) {

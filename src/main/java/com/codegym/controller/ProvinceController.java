@@ -18,7 +18,7 @@ public class ProvinceController {
     private ICustomerService customerService;
 
     @GetMapping()
-        public ModelAndView getProvincePage(){
+        public ModelAndView getProvincePage() throws Exception {
         ModelAndView modelAndView = new ModelAndView("province/list-province");
         modelAndView.addObject("provinces", provinceService.getAll());
         return modelAndView;
@@ -43,7 +43,7 @@ public class ProvinceController {
     }
 
     @GetMapping("/{id}/delete")
-    public ModelAndView deleteProvince(@PathVariable Long id){
+    public ModelAndView deleteProvince(@PathVariable Long id) throws Exception {
         provinceService.delete(id);
         ModelAndView modelAndView = new ModelAndView("province/list-province");
         modelAndView.addObject("provinces", provinceService.getAll());

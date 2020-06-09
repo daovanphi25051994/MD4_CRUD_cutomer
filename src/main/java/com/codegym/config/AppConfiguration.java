@@ -1,6 +1,7 @@
 package com.codegym.config;
 
 
+import com.codegym.concern.Logger;
 import com.codegym.formatter.ProvinceFormatter;
 import com.codegym.service.customer.CustomerService;
 import com.codegym.service.customer.ICustomerService;
@@ -12,6 +13,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.FormatterRegistry;
@@ -22,6 +24,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -41,7 +44,8 @@ import java.util.Properties;
 @ComponentScan("com.codegym.controller")
 @EnableJpaRepositories("com.codegym.repository")
 @EnableTransactionManagement
-public class AppConfiguration implements ApplicationContextAware {
+@EnableAspectJAutoProxy
+public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Override
@@ -128,6 +132,10 @@ public class AppConfiguration implements ApplicationContextAware {
 
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new ProvinceFormatter(applicationContext.getBean(ProvinceService.class)));
+    }
+    @Bean
+    public Logger logger() {
+        return new Logger();
     }
 
 }
