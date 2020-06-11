@@ -8,8 +8,8 @@
     <title>List Customer</title>
 </head>
 <body>
-<div><a href="/customer/create-form">Add customer</a></div>
-<div><a href="/province">Province</a></div>
+<div><a th:href="@{/customer/create-form}">Add customer</a></div>
+<div><a th:href="@{/province}">Province</a></div>
 <div>
     <form th:action="@{customer/find}" method="post" th:object="${customer}">
         <tr>
@@ -25,6 +25,11 @@
 
 </div>
 <div>
+    <div>
+        <a th:href="@{/customer/(page=${customers.number - 1})}" th:if="${customers.hasPrevious()}">Previous</a>
+        <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
+        <a th:href="@{'customer/'(page=${customers.number + 1})}" th:if="${customers.hasNext()}">Next</a>
+    </div>
     <table>
         <thead>
         <td>FIRST NAME</td>

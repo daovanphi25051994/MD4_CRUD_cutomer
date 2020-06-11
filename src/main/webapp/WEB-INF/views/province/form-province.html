@@ -9,7 +9,7 @@
 </head>
 <body>
 <div>
-    <div><a href="/province">Back province</a></div>
+    <div><a th:href="@{/province}">Back province</a></div>
     <form action="#" th:action="@{create}" method="post" th:object="${province}">
         <input type="hidden" th:field="*{id}">
         <div>

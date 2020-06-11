@@ -10,7 +10,7 @@
 <body>
 <div>
     <div>
-        <a href="/customer">Back customer</a>
+        <a th:href="@{/customer}">Back customer</a>
     </div>
     <form action="#" th:action="@{create}" method="post" th:object="${customer}">
         <input type="hidden" th:field="*{id}" name="id">
@@ -31,7 +31,6 @@
             </td>
         </tr>
         <div>
-
             <button type="submit">CREATE</button>
         </div>
     </form>

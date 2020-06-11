@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,7 +8,7 @@
     <title>Home</title>
 </head>
 <body>
-<div><a href="/customer">Customer</a></div>
-<div><a href="/province">Province</a></div>
+<div><a th:href="@{/customer}">Customer</a></div>
+<div><a th:href="@{/province}">Province</a></div>
 </body>
 </html>

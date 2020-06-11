@@ -5,9 +5,14 @@ import com.codegym.model.Province;
 import com.codegym.service.customer.ICustomerService;
 import com.codegym.service.province.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -18,17 +23,33 @@ public class CustomerController {
     @Autowired
     private IProvinceService provinceService;
 
+    //    @GetMapping()
+//    public ModelAndView getCustomerPage() {
+//        ModelAndView modelAndView = new ModelAndView("customer/list-customer");
+//        modelAndView.addObject("customers", customerService.getAll());
+//        modelAndView.addObject("provinces", provinces());
+//        modelAndView.addObject("customer", new Customer());
+//        return modelAndView;
+//    }
     @GetMapping()
-    public ModelAndView getCustomerPage() throws Exception {
-        ModelAndView modelAndView = new ModelAndView("customer/list-customer");
-        modelAndView.addObject("customers", customerService.getAll());
+    public ModelAndView listCustomers(@RequestParam("s") Optional<String> s, @RequestParam(defaultValue = "0") int page,
+                                      @RequestParam(defaultValue = "3") int size) {
+        Pageable pageable = new PageRequest(page, size);
+        Page<Customer> customers;
+        if (s.isPresent()) {
+            customers = customerService.findAllByFirstName(s.get(), pageable);
+        } else {
+            customers = customerService.findAll(pageable);
+        }
+        ModelAndView modelAndView = new ModelAndView("/customer/list-customer");
+        modelAndView.addObject("customers", customers);
         modelAndView.addObject("provinces", provinces());
         modelAndView.addObject("customer", new Customer());
         return modelAndView;
     }
 
     @PostMapping("/find")
-    public ModelAndView getCustomerByProvince(@RequestParam Province province) throws Exception {
+    public ModelAndView getCustomerByProvince(@RequestParam Province province) {
         ModelAndView modelAndView = new ModelAndView("customer/list-customer");
         modelAndView.addObject("customers", customerService.getAllByProvince(province));
         modelAndView.addObject("provinces", provinces());
@@ -37,12 +58,12 @@ public class CustomerController {
     }
 
     @ModelAttribute("provinces")
-    public Iterable<Province> provinces() throws Exception {
+    public Iterable<Province> provinces() {
         return provinceService.getAll();
     }
 
     @GetMapping("/create-form")
-    public ModelAndView moveToCustomerFormPage() throws Exception {
+    public ModelAndView moveToCustomerFormPage() {
         ModelAndView modelAndView = new ModelAndView("customer/form-customer");
         modelAndView.addObject("customer", new Customer());
         modelAndView.addObject("provinces", provinces());
@@ -74,7 +95,7 @@ public class CustomerController {
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteCustomer(@PathVariable Long id) throws Exception {
+    public ModelAndView deleteCustomer(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("customer/list-customer");
         customerService.delete(id);
         modelAndView.addObject("customers", customerService.getAll());
